@@ -24,9 +24,11 @@ export const Node = ({ setPos, pos }: NodeProps) => {
       radius={50}
       fill={dragging ? "yellow" : "green"}
       shadowBlur={10}
+      stroke="black"
       x={pos.x}
       y={pos.y}
       draggable
+      zIndex={dragging ? 10 : 1}
       onDragStart={startDragging}
       onDragMove={dragMove}
       onDragEnd={endDragging}

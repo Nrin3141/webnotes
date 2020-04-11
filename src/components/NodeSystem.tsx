@@ -19,8 +19,8 @@ export const NodeSystem = () => {
       <Node setPos={(pos: Pos) => setNodePos(1, pos)} pos={pos[1]} />
       <Line
         points={[pos[0].x, pos[0].y, pos[1].x, pos[1].y]}
-        fill="white"
-        stroke="white"
+        stroke="black"
+        fill="black"
       />
     </>
   );
