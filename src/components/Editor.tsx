@@ -31,7 +31,7 @@ export const TextEditor = () => {
   return (
     <>
       <button onClick={saveText}>Save text</button>
-      <div ref={editorRef}></div>
+      <div className="text-editor-container" ref={editorRef}></div>
     </>
   );
 };
