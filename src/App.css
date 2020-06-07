@@ -1,4 +1,17 @@
-.text-editor-container {
-  width: 100vw;
+.textInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50vw;
   height: 100vh;
+  background: green;
+}
+
+.renderedOutput {
+  position: absolute;
+  top: 0;
+  left: 50vw;
+  width: 50vw;
+  height: 100vh;
+  background: yellow;
 }

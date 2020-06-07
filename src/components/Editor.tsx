@@ -1,40 +1,30 @@
-import React, { useRef, useEffect, useState } from "react";
-import Quill from "quill";
+import React, { useState } from "react";
+import marked from "marked";
+import DOMPurify from "dompurify";
 
 export const TextEditor = () => {
-  const [editor, setEditor] = useState<Quill>();
   const [text, setText] = useState("");
-  const editorRef = useRef<HTMLDivElement>(null);
+  const [parsed, setParsed] = useState("");
 
-  useEffect(() => {
-    let Inline = Quill.import("blots/inline");
-    class GrammarlyInline extends Inline {}
-    GrammarlyInline.tagName = "G";
-    GrammarlyInline.blotName = "grammarly-inline";
-    GrammarlyInline.className = "gr_";
-    Quill.register(GrammarlyInline);
-    const container = editorRef.current as Element;
-    setEditor(
-      new Quill(container, {
-        theme: "snow",
-      })
-    );
-  }, []);
-
-  const saveText = () => {
-    if (editor) {
-      setText(editor.getText());
-    }
+  const handleInput = (e: any) => {
+    setText(e.target.value);
+    const dirty = marked(e.target.value);
+    const clean = DOMPurify.sanitize(dirty);
+    setParsed(clean);
   };
-
-  useEffect(() => {
-    console.log(text);
-  }, [text]);
 
   return (
     <>
-      <button onClick={saveText}>Save text</button>
-      <div className="text-editor-container" ref={editorRef}></div>
+      <textarea
+        className="textInput"
+        spellCheck={false}
+        onInput={handleInput}
+        value={text}
+      />
+      <div
+        className="renderedOutput"
+        dangerouslySetInnerHTML={{ __html: parsed }}
+      ></div>
     </>
   );
 };
