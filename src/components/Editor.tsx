@@ -6,6 +6,7 @@ import math from "remark-math";
 import remark2rehype from "remark-rehype";
 import katex from "rehype-katex";
 import stringify from "rehype-stringify";
+import sanitize from "rehype-sanitize";
 
 const processor = unified()
   .use(english)
@@ -13,6 +14,7 @@ const processor = unified()
   .use(math)
   .use(remark2rehype)
   .use(katex)
+  .use(sanitize)
   .use(stringify);
 
 function parse(value: string) {
@@ -21,13 +23,11 @@ function parse(value: string) {
 
 export const TextEditor = () => {
   const [text, setText] = useState("");
-  const [parsed, setParsed] = useState("");
+  const [parsed, setParsed] = useState<any>();
 
   const handleInput = (e: any) => {
     setText(e.target.value);
-    const dirty = marked(e.target.value);
-    const clean = DOMPurify.sanitize(dirty);
-    setParsed(clean);
+    setParsed(parse(e.target.value));
   };
 
   return (
