@@ -19,26 +19,12 @@ export const Node = ({ setPos, pos, text }: NodeProps) => {
     const newPos: Pos = { x: target.x(), y: target.y() };
     setPos(newPos);
   };
-
   return (
     <>
-      <Text
-        text={text}
-        fill={dragging ? "green" : "black"}
-        align="center"
-        x={pos.x}
-        y={pos.y}
-        draggable
-        zIndex={dragging ? 10 : 1}
-        onDragStart={startDragging}
-        onDragMove={dragMove}
-        onDragEnd={endDragging}
-      />
       <Circle
         x={pos.x}
         y={pos.y}
         draggable
-        zIndex={dragging ? 10 : 1}
         onDragStart={startDragging}
         onDragMove={dragMove}
         onDragEnd={endDragging}
@@ -46,6 +32,14 @@ export const Node = ({ setPos, pos, text }: NodeProps) => {
         fill={dragging ? "yellow" : "green"}
         shadowBlur={10}
         stroke="black"
+      />
+      <Text
+        text={text}
+        fill={dragging ? "green" : "black"}
+        align="center"
+        width={50}
+        x={pos.x - 50 / 2}
+        y={pos.y}
       />
     </>
   );

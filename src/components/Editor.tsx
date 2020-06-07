@@ -13,9 +13,12 @@ export const TextEditor = () => {
     GrammarlyInline.blotName = "grammarly-inline";
     GrammarlyInline.className = "gr_";
     Quill.register(GrammarlyInline);
-
     const container = editorRef.current as Element;
-    setEditor(new Quill(container));
+    setEditor(
+      new Quill(container, {
+        theme: "snow",
+      })
+    );
   }, []);
 
   const saveText = () => {
