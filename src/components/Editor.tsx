@@ -1,47 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import unified from "unified";
-import english from "retext-english";
-import markdown from "remark-parse";
+import parse from "remark-parse";
 import math from "remark-math";
-import remark2rehype from "remark-rehype";
 import katex from "rehype-katex";
-import stringify from "rehype-stringify";
+import remark2rehype from "remark-rehype";
 import sanitize from "rehype-sanitize";
-
-const processor = unified()
-  .use(english)
-  .use(markdown)
-  .use(math)
-  .use(remark2rehype)
-  .use(katex)
-  .use(sanitize)
-  .use(stringify);
-
-function parse(value: string) {
-  return processor.runSync(processor.parse(value));
-}
+import stringify from "rehype-stringify";
+import remark2react from "remark-react";
 
 export const TextEditor = () => {
   const [text, setText] = useState("");
-  const [parsed, setParsed] = useState<any>();
-
+  const [parsed, setParsed] = useState<any>(null);
+  const [parsedString, setParsedString] = useState("");
   const handleInput = (e: any) => {
     setText(e.target.value);
-    setParsed(parse(e.target.value));
+    const parsed = unified()
+      .use(parse)
+      .use(math)
+      .use(remark2rehype)
+      .use(katex)
+      .use(remark2react)
+      .processSync(e.target.value) as any;
+    setParsed(parsed.result);
+    setParsedString(
+      unified()
+        .use(parse)
+        .use(math)
+        .use(katex)
+        .use(remark2rehype)
+        .use(sanitize)
+        .use(stringify)
+        .processSync(e.target.value) as any
+    );
   };
 
+  useEffect(() => {
+    console.log(parsed);
+  }, [parsed]);
   return (
     <>
       <textarea
         className="textInput"
         spellCheck={false}
-        onInput={handleInput}
+        onChange={handleInput}
         value={text}
       />
-      <div
-        className="renderedOutput"
-        dangerouslySetInnerHTML={{ __html: parsed }}
-      ></div>
+      <div className="renderedOutput">
+        <div id="reactRemark">{parsed}</div>
+        <div
+          id="innerHTMLRemark"
+          dangerouslySetInnerHTML={{ __html: parsedString }}
+        ></div>
+      </div>
     </>
   );
 };

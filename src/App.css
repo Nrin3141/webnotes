@@ -13,5 +13,15 @@
   left: 50vw;
   width: 50vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: yellow;
+}
+
+#reactRemark {
+  background: white;
+}
+.renderedOutput > div {
+  height: 50vh;
+  overflow: hidden;
 }
