@@ -7,7 +7,7 @@ import unified from "unified";
 import english from "retext-english";
 import stringify from "retext-stringify";
 
-function all(node: any, parentIds: any): any {
+export default function all(node: any, parentIds: any): any {
   const children = node.children;
   const length = children.length;
   let results: any = [];
@@ -47,7 +47,7 @@ function getAverage(results: any) {
   ]);
 }
 
-export default function computeHighlightStyle(node: any, age = 12, scale = 6) {
+function computeHighlightStyle(node: any, age = 12, scale = 6) {
   const text = unified().use(english).use(stringify).stringify(node);
   const results = readabilityScores(text);
   const average = getAverage(results);
