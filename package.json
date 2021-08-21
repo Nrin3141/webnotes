@@ -14,6 +14,7 @@
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/uuid": "^8.0.0",
+    "adverb-where": "^0.2.5",
     "compute-median": "^2.0.0",
     "konva": "^4.2.2",
     "lerp": "^1.0.3",
@@ -31,12 +32,18 @@
     "remark-parse": "^8.0.2",
     "remark-react": "^7.0.1",
     "remark-rehype": "^7.0.0",
+    "retext-assuming": "^1.0.0",
     "retext-english": "^3.0.4",
+    "retext-equality": "^6.1.0",
+    "retext-intensify": "^6.0.0",
+    "retext-passive": "^4.0.0",
+    "retext-simplify": "^7.0.1",
     "retext-stringify": "^2.0.4",
     "typescript": "^3.7.5",
     "unified": "^9.0.0",
     "unlerp": "^1.0.1",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "write-good": "^1.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
