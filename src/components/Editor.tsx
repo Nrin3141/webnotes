@@ -8,7 +8,7 @@ import remark2rehype from "remark-rehype";
 import stringify from "rehype-stringify";
 import all from "./highlight";
 import english from "retext-english";
-import { Toolbar } from "./Toolbar";
+import { HighlightButton, Toolbar } from "./Toolbar";
 
 const modes = {
   split: "split",
@@ -84,13 +84,12 @@ export const TextEditor = () => {
   };
   return (
     <>
-      <Toolbar<Modes>
-        possibleModes={modes}
-        mode={mode}
-        setMode={setMode}
-        highlight={highlighting}
-        toggleHighlighting={toggleHighlighting}
-      />
+      <Toolbar<Modes> possibleModes={modes} mode={mode} setMode={setMode}>
+        <HighlightButton
+          highlight={highlighting}
+          toggleHighlighting={toggleHighlighting}
+        />
+      </Toolbar>
       <div className="editor-container">
         <div className={getClassnames(mode, modes.editor as keyof Modes)}>
           {highlighting && (
