@@ -21,10 +21,10 @@ body {
 .editor {
   min-height: 100vh;
 }
-.preview > * {
+.rendered > * {
   margin: 0;
 }
-.preview {
+.rendered {
   min-height: 100vh;
   font-family: monospace;
   font-size: 16px;

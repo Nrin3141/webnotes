@@ -13,10 +13,11 @@ import { HighlightButton, Toolbar } from "./Toolbar";
 const modes = {
   split: "split",
   editor: "editor",
-  preview: "preview",
+  rendered: "rendered",
 };
 
 type Modes = typeof modes;
+const defaultMode = modes.split as keyof Modes;
 
 const initialText = `# My header has arrived!
 
@@ -38,7 +39,7 @@ When it becomes even more difficult and people can not really follow it anymore 
 
 export const TextEditor = () => {
   const [highlighting, setHighlighting] = useState(true);
-  const [mode, setMode] = useState(modes.split as keyof Modes);
+  const [mode, setMode] = useState(defaultMode);
   const [text, setText] = useState("");
   const [parsed, setParsed] = useState("");
   const [highlights, setHighlights] = useState<any>([]);
@@ -98,7 +99,7 @@ export const TextEditor = () => {
           <textarea spellCheck={false} onChange={handleInput} value={text} />
         </div>
         <div
-          className={getClassnames(mode, modes.preview as keyof Modes)}
+          className={getClassnames(mode, modes.rendered as keyof Modes)}
           dangerouslySetInnerHTML={{ __html: parsed }}
         ></div>
       </div>

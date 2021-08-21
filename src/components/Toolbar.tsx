@@ -21,7 +21,7 @@ export function Toolbar<T extends Record<string, string>>({
             className={`${mode === possibleModes[i] ? "litButton" : ""}`}
             onClick={() => setMode(possibleModes[i])}
           >
-            Toggle {key}
+            {key} view
           </button>
         );
       })}
