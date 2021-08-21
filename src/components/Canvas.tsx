@@ -10,10 +10,10 @@ const defaultMenu = {
   pos: { top: 0, left: 0 },
   selectedShape: null,
 };
-const Canvas = () => {
+
+const NodeCanvas = () => {
   const [menu, setMenu] = useState(defaultMenu);
   const stageRef: any = useRef();
-  const menuRef: any = useRef();
   const zoom = (e: KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
     const scaleBy = 1.04;
@@ -57,8 +57,17 @@ const Canvas = () => {
     }
   };
 
+  const menuRef: any = useRef();
   return (
     <>
+      {menu.show && (
+        <ContextMenu
+          menuRef={menuRef}
+          top={menu.pos.top}
+          left={menu.pos.left}
+        />
+      )}
+
       <Stage
         style={{ backgroundColor: "white" }}
         draggable
@@ -73,14 +82,43 @@ const Canvas = () => {
           <NodeSystem />
         </Layer>
       </Stage>
-      {menu.show && (
-        <ContextMenu
-          menuRef={menuRef}
-          top={menu.pos.top}
-          left={menu.pos.left}
-        />
-      )}
-      <TextEditor />
+    </>
+  );
+};
+
+enum possibleStates {
+  textEditor = "textEditor",
+}
+
+const defaultState = possibleStates.textEditor;
+
+const Controller = ({ state }: { state: possibleStates }) => {
+  switch (state) {
+    case possibleStates.textEditor:
+      return <TextEditor />;
+  }
+};
+
+interface SwitchProps {
+  state: possibleStates;
+  setState: () => void;
+}
+const Switch = ({ state, setState }: SwitchProps) => {
+  return (
+    <>
+      {Object.values(possibleStates).map((state) => {
+        return <button style={{border: }}>{state}</button>;
+      })}
+    </>
+  );
+};
+
+const Canvas = () => {
+  const [state, setState] = useState<possibleStates>(defaultState);
+  return (
+    <>
+      <Switch state={state} setState={setState} />
+      <Controller state={state} />
     </>
   );
 };
