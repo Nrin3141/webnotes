@@ -3,6 +3,7 @@ import { Layer, Stage } from "react-konva";
 import { NodeSystem } from "./NodeSystem";
 import { KonvaEventObject } from "konva/types/Node";
 import { ContextMenu } from "./ContextMenu";
+import { Toolbar } from "./Toolbar";
 import { TextEditor } from "./Editor";
 
 const defaultMenu = {
@@ -11,7 +12,7 @@ const defaultMenu = {
   selectedShape: null,
 };
 
-const NodeCanvas = () => {
+export const Canvas = () => {
   const [menu, setMenu] = useState(defaultMenu);
   const stageRef: any = useRef();
   const zoom = (e: KonvaEventObject<WheelEvent>) => {
@@ -86,41 +87,38 @@ const NodeCanvas = () => {
   );
 };
 
-enum possibleStates {
-  textEditor = "textEditor",
+const modes = {
+  textEditor: "textEditor",
+  textNodes: "textNodes",
+};
+type Modes = typeof modes;
+
+const defaultMode = modes.textEditor as keyof Modes;
+
+interface SwitchProps {
+  mode: keyof Modes;
 }
 
-const defaultState = possibleStates.textEditor;
-
-const Controller = ({ state }: { state: possibleStates }) => {
-  switch (state) {
-    case possibleStates.textEditor:
+const Switch = ({ mode }: SwitchProps) => {
+  switch (mode) {
+    case modes.textEditor:
       return <TextEditor />;
+    case modes.textNodes:
+      return <Canvas />;
+    default:
+      return <></>;
   }
 };
 
-interface SwitchProps {
-  state: possibleStates;
-  setState: () => void;
-}
-const Switch = ({ state, setState }: SwitchProps) => {
+const Controller = () => {
+  const [mode, setMode] = useState(defaultMode);
+
   return (
     <>
-      {Object.values(possibleStates).map((state) => {
-        return <button style={{border: }}>{state}</button>;
-      })}
+      <Toolbar<Modes> mode={mode} setMode={setMode} possibleModes={modes} />
+      <Switch mode={mode} />
     </>
   );
 };
 
-const Canvas = () => {
-  const [state, setState] = useState<possibleStates>(defaultState);
-  return (
-    <>
-      <Switch state={state} setState={setState} />
-      <Controller state={state} />
-    </>
-  );
-};
-
-export default Canvas;
+export default Controller;
